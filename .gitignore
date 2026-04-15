@@ -1,0 +1,33 @@
+# Build outputs
+android/app/build/
+android/.gradle/
+android/local.properties
+build/
+
+# Core (clonado no build)
+citra-core/
+android/app/src/main/cpp/citra-src/
+externals/
+
+# Android Studio
+*.iml
+.idea/
+.DS_Store
+*.apk
+*.aab
+
+# NDK / CMake
+.cxx/
+CMakeFiles/
+CMakeCache.txt
+
+# Gradle
+gradle/wrapper/gradle-wrapper.jar
+
+# Keys / signing
+*.jks
+*.keystore
+keystore.properties
+
+# Logs
+*.log

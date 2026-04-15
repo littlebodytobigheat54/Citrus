@@ -1,0 +1,130 @@
+name: Build Citra Android
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install NDK and CMake
+        run: |
+          echo "y" | sdkmanager "ndk;26.1.10909125"
+          echo "y" | sdkmanager "cmake;3.22.1"
+
+      - name: Install Build Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            ninja-build \
+            ccache \
+            libssl-dev \
+            zlib1g-dev \
+            python3 \
+            python3-pip
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: gradle-
+
+      - name: Cache CCache
+        uses: actions/cache@v4
+        with:
+          path: ~/.ccache
+          key: ccache-android-${{ github.sha }}
+          restore-keys: ccache-android-
+
+      - name: Configure CCache
+        run: |
+          ccache --max-size=5G
+          ccache --set-config=compression=true
+
+      - name: Clone Citra Core (Lime3DS fork)
+        run: |
+          git clone --recursive --depth=1 \
+            https://github.com/Lime3DS/Lime3DS.git \
+            citra-core
+          echo "Citra core cloned successfully"
+
+      - name: Copy Core to Project
+        run: |
+          cp -r citra-core/src ./android/app/src/main/cpp/citra-src
+          cp -r citra-core/externals ./externals
+          echo "Core files copied"
+
+      - name: Make Gradlew Executable
+        run: chmod +x android/gradlew
+
+      - name: Build Debug APK
+        run: |
+          cd android
+          ./gradlew assembleDebug \
+            -Pandroid.ndkVersion="26.1.10909125" \
+            --no-daemon \
+            --stacktrace
+        env:
+          CCACHE_DIR: ~/.ccache
+          CC: ccache gcc
+          CXX: ccache g++
+
+      - name: Build Release APK
+        run: |
+          cd android
+          ./gradlew assembleRelease \
+            -Pandroid.ndkVersion="26.1.10909125" \
+            --no-daemon
+        env:
+          CCACHE_DIR: ~/.ccache
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: citra-android-debug
+          path: android/app/build/outputs/apk/debug/*.apk
+          retention-days: 7
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: citra-android-release
+          path: android/app/build/outputs/apk/release/*.apk
+          retention-days: 30
+
+      - name: Create Release (on tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            android/app/build/outputs/apk/release/*.apk
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: CCache Stats
+        run: ccache --show-stats

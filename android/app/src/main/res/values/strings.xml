@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Citra</string>
+    <string name="app_name_full">Citra Android Custom</string>
+
+    <!-- Library -->
+    <string name="library_title">Biblioteca</string>
+    <string name="no_games_found">Nenhum jogo encontrado</string>
+    <string name="add_games_hint">Adicione uma pasta com seus jogos ou abra um arquivo diretamente.</string>
+    <string name="select_folder">Selecionar Pasta</string>
+    <string name="open_file">Abrir Arquivo</string>
+    <string name="scan_folder">Escanear Pasta</string>
+
+    <!-- Emulator -->
+    <string name="loading_game">Carregando jogo…</string>
+    <string name="emulation_paused">Emulação pausada</string>
+    <string name="save_state">Salvar Estado</string>
+    <string name="load_state">Carregar Estado</string>
+    <string name="screenshot_saved">Captura de tela salva</string>
+    <string name="screenshot_failed">Falha ao salvar captura</string>
+    <string name="state_saved">Estado salvo no slot %1$d</string>
+    <string name="state_loaded">Estado carregado do slot %1$d</string>
+
+    <!-- Settings -->
+    <string name="settings">Configurações</string>
+    <string name="graphics">Gráficos</string>
+    <string name="cpu">CPU</string>
+    <string name="audio">Áudio</string>
+    <string name="controls">Controles</string>
+    <string name="interface_section">Interface</string>
+    <string name="use_vulkan">Renderizador Vulkan</string>
+    <string name="use_vulkan_desc">Melhor desempenho em dispositivos compatíveis</string>
+    <string name="internal_resolution">Resolução Interna</string>
+    <string name="cpu_speed">Velocidade da CPU</string>
+    <string name="audio_volume">Volume</string>
+    <string name="dark_theme">Tema Escuro</string>
+    <string name="show_fps">Mostrar FPS</string>
+    <string name="haptic_feedback">Vibração Háptica</string>
+    <string name="save_settings">Salvar Configurações</string>
+
+    <!-- Errors -->
+    <string name="error_load_game">Não foi possível carregar o jogo</string>
+    <string name="error_init">Falha ao inicializar o emulador</string>
+    <string name="error_no_file">Arquivo não encontrado</string>
+
+    <!-- Buttons -->
+    <string name="btn_back">Voltar</string>
+    <string name="btn_close">Fechar</string>
+    <string name="btn_exit">Sair</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_ok">OK</string>
+</resources>

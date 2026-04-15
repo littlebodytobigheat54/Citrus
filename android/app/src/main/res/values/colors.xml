@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="citra_blue">#0077CC</color>
+    <color name="citra_blue_dark">#003A6B</color>
+    <color name="citra_red">#CC0000</color>
+    <color name="background_dark">#0D0D1A</color>
+    <color name="surface_dark">#16213E</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Button colors -->
+    <color name="btn_a">#E53935</color>
+    <color name="btn_b">#FDD835</color>
+    <color name="btn_x">#1E88E5</color>
+    <color name="btn_y">#43A047</color>
+    <color name="btn_shoulder">#546E7A</color>
+</resources>
