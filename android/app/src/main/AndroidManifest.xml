@@ -36,58 +36,65 @@
         android:theme="@style/Theme.CitraAndroid"
         android:hardwareAccelerated="true"
         android:largeHeap="true"
-        android:extractNativeLibs="true"
         tools:targetApi="34">
+<!-- ── Main Activity ──────────────────────────── -->
+<activity
+    android:name="com.citra.android.MainActivity"
+    android:exported="true">
 
-        <!-- ── Main Activity ──────────────────────────── -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustNothing"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+    <!-- Launcher -->
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
 
-        <!-- ── Emulator Activity ──────────────────────── -->
-        <activity
-            android:name=".EmulatorActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape"
-            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboard|keyboardHidden|navigation"
-            android:theme="@style/Theme.CitraAndroid.Fullscreen"
-            android:launchMode="singleTask"
-            android:hardwareAccelerated="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="content" />
-                <data android:mimeType="application/octet-stream" />
-            </intent-filter>
-        </activity>
+    <!-- File Types Support -->
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
 
-        <!-- ── File Types Support ────────────────────── -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="file" android:mimeType="*/*"
-                    android:pathPattern=".*\\.3ds" />
-                <data android:scheme="file" android:mimeType="*/*"
-                    android:pathPattern=".*\\.cci" />
-                <data android:scheme="file" android:mimeType="*/*"
-                    android:pathPattern=".*\\.cia" />
-                <data android:scheme="file" android:mimeType="*/*"
-                    android:pathPattern=".*\\.cxi" />
-            </intent-filter>
-        </activity>
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
 
+        <!-- Arquivos locais -->
+        <data
+            android:scheme="file"
+            android:mimeType="*/*"
+            android:pathPattern=".*\\.3ds" />
+        <data
+            android:scheme="file"
+            android:mimeType="*/*"
+            android:pathPattern=".*\\.cci" />
+        <data
+            android:scheme="file"
+            android:mimeType="*/*"
+            android:pathPattern=".*\\.cia" />
+        <data
+            android:scheme="file"
+            android:mimeType="*/*"
+            android:pathPattern=".*\\.cxi" />
+
+        <!-- Arquivos via gerenciadores de arquivos -->
+        <data android:scheme="content" />
+    </intent-filter>
+</activity>
+
+<!-- ── Emulator Activity ──────────────────────── -->
+<activity
+    android:name=".EmulatorActivity"
+    android:exported="false"
+    android:screenOrientation="sensorLandscape"
+    android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboard|keyboardHidden|navigation"
+    android:theme="@style/Theme.CitraAndroid.Fullscreen"
+    android:launchMode="singleTask"
+    android:hardwareAccelerated="true">
+
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:scheme="content" />
+        <data android:mimeType="application/octet-stream" />
+    </intent-filter>
+</activity>
         <!-- ── Emulation Service ─────────────────────── -->
         <service
             android:name=".service.EmulationService"
